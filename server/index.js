@@ -3,6 +3,8 @@ const app = express();
 const cors = require("cors");
 const pool = require("./db");
 const car_route= require('./routers/car_route')
+const member_route= require('./routers/member_route')
+
 
 app.use(cors());
 app.use(express.json())
