@@ -1,6 +1,7 @@
 const pool = require("../db");
 
-module.exports={addCar:  async (req, res) => {
+module.exports={
+  addCar:  async (req, res) => {
     try {
       const { name,model,make_year, rating } = req.body;
       console.log("Adding car");
@@ -17,4 +18,12 @@ module.exports={addCar:  async (req, res) => {
       });
     }
   },
+  DisplayAllCars: async(req,res)=>{
+    try {
+      const allCars = await pool.query("SELECT * FROM car");
+      res.json(allCars.rows);
+    } catch (err) {
+      console.error(err.message);
+    }
+  }
 }
