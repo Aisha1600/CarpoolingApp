@@ -25,5 +25,47 @@ module.exports={
     } catch (err) {
       console.error(err.message);
     }
+  },
+  DeleteCar: async(req,res)=>{
+    try {
+      const { car_id } = req.params;
+      const deleteCar = await pool.query(
+          "DELETE FROM car WHERE car_id = $1",
+          [car_id]
+      );
+      res.json("Car  was deleted!");
+  } catch (err) {
+      console.error(err.message);
   }
+},
+UpdateCar: async(req,res)=>{
+  try {
+    const { car_id } = req.params;
+    const {name, model,make_year,rating } = req.body;
+    const updateCar = await pool.query(
+        "UPDATE car SET name = $1, model=$2, make_year=$3, rating=$4 WHERE car_id =$5",
+        [name, model,make_year,rating, car_id]
+    );
+
+    res.json("Car is updated!");
+} catch (err) {
+    console.error(err.message);
+}
+},
+GetaCar: async(req,res)=>{
+  try {
+    const { car_id } = req;
+
+    const carname = await pool.query(
+      `SELECT * FROM "car" 
+      WHERE car_id = $1;`,
+      [car_id]
+    );
+    res.json(carname.rows);
+  } catch {
+    res.sendStatus(400);
+  }
+},
+
+
 }
