@@ -4,6 +4,10 @@ const MemberController = require("../controllers/member_controller");
 
 // PATCH modify user fields, change password & email- /
 router.post('/SignUp',MemberController.SignUp);
+router.put('/UpdateUser',MemberController.UpdateUser);
+router.put('/UpdatePassword',MemberController.UpdatePassword);
+
+
 // DELETE specified user - /
 router.delete('/', userController.deleteUser);
 
@@ -11,5 +15,8 @@ router.delete('/', userController.deleteUser);
 
 // GET get username
 router.get('/username', userController.getUsername);
+router.get('/getMember', userController.getMember);
+router.get('/GetAllMembers', userController.GetAllMembers);
+
 
 module.exports = router;
