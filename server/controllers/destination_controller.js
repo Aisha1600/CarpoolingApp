@@ -48,7 +48,7 @@ res.json(sourcename.rows);
     } catch (err) {
         console.error(err.message);
     }
-}
+};
 //delete source 
 const DeleteSource = async(req, res) => {
     try {
@@ -61,7 +61,7 @@ const DeleteSource = async(req, res) => {
     } catch (err) {
         console.error(err.message);
     }
-} 
+} ;
 //update destination
 const UpdateDest = async (req, res) => {
     try {
@@ -121,4 +121,4 @@ const DeleteDest = async(req, res) => {
     } catch (err) {
         console.error(err.message);
     }
-} 
+}; 
