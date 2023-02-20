@@ -21,7 +21,7 @@ module.exports={
   DisplayAllCars: async(req,res)=>{
     try {
       const allCars = await pool.query("SELECT * FROM car");
-      res.json(allCars.rows);
+      res.status(200).send(allCars.rows);
     } catch (err) {
       console.error(err.message);
     }
@@ -33,9 +33,10 @@ module.exports={
           "DELETE FROM car WHERE car_id = $1",
           [car_id]
       );
-      res.json("Car  was deleted!");
+      res.status(200).send("Car  was deleted!");
   } catch (err) {
-      console.error(err.message);
+    console.error(err);
+    res.status(500).send(err.message);
   }
 },
 UpdateCar: async(req,res)=>{
