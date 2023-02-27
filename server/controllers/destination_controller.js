@@ -2,21 +2,33 @@ const pool = require("./db");
 
 //update source 
 
+
 const UpdateSource = async (req, res) => {
     try {
-        const { destination_id } = req.params;
-        const {source_name, s_address} = req.body;
-        const updateSource = await pool.query(
-            "UPDATE destination SET source_name = $1, s_address=$2 WHERE destination_id =$3",
-            [source_name, s_address,destination_id]
-        );
-    
-        res.json("Source is updated!");
-    } catch {
-      res.sendStatus(400);
+      const { destination_id } = req.params;
+      const { source_name, s_address } = req.body;
+  
+      // Input validation
+      if (!destination_id || !source_name || !s_address) {
+        return res.status(400).json({ error: 'Invalid input' });
+      }
+  
+      const updateSource = await pool.query(
+        'UPDATE destination SET source_name = $1, s_address=$2 WHERE destination_id =$3',
+        [source_name, s_address, destination_id]
+      );
+  
+      // Response format
+      if (updateSource.rowCount === 0) {
+        return res.status(404).json({ error: 'Destination not found' });
+      }
+      res.json({ message: 'Source updated successfully', destination_id });
+    } catch (error) {
+      // Error handling
+      console.error(error);
+      res.sendStatus(500);
     }
   };
-
 //insert source 
 const InsertSource = async(req,res) => {
     //async provides wait
