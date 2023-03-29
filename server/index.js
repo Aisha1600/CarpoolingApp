@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
-const pool = require("./db");
+const pool = require("./db.js");
 const car_route= require('./routers/car_route')
 const member_route= require('./routers/member_router')
 const destination_route= require('./routers/destination_route')

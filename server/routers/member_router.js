@@ -1,4 +1,4 @@
-const pool = require('../db');
+const pool = require('../db.js');
 const router = require('express').Router();
 const MemberController = require("../controllers/member_controller");
 

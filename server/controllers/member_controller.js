@@ -1,5 +1,5 @@
 
-const pool = require("./db");
+const pool = require("../db");
 
 
 const SignUp = async (req, res) => {
