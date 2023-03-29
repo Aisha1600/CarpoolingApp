@@ -9,14 +9,14 @@ router.put('/UpdatePassword',MemberController.UpdatePassword);
 
 
 // DELETE specified user - /
-router.delete('/', userController.deleteUser);
+router.delete('/:id', MemberController.DeleteMember);
 
 // POST log out everywhere - /
 
 // GET get username
-router.get('/username', userController.getUsername);
-router.get('/getMember', userController.getMember);
-router.get('/GetAllMembers', userController.GetAllMembers);
+//router.get('/username', MemberController.getUsername);
+router.get('/getMember', MemberController.GetOneMembers);
+router.get('/GetAllMembers', MemberController.getMember);
 
 
 module.exports = router;

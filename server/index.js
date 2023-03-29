@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
-const cors = require("cors");
-const pool = require("./db");
+const cors = require("cors"); 
+const pool = require("./db.js");
 const car_route= require('./routers/car_route')
 const member_route= require('./routers/member_router')
 const destination_route= require('./routers/destination_route')
@@ -19,15 +19,15 @@ app.use('/car',car_route)
 app.use('/member',member_route)
 app.use('/membercar',membercar_route)
 app.use('/destination',destination_route)
-app.use('./rides',ride_route)
-app.use('./requestcreated',requestcreated_route)
-app.use('./requestsent',requestsent_route)
+// app.use('/rides',ride_route)
+// // app.use('/requestcreated',requestcreated_route)
+// app.use('/requestsent',requestsent_route)
 
 
 
 
 
   
-app.listen(5432, () =>{
+app.listen(5000, () =>{
     console.log("Server has started on port 5000")
 })
