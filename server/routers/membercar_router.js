@@ -1,7 +1,12 @@
 const pool = require('../db.js');
 const router = require('express').Router();
+//const express = require("express");
+//const router = express.Router();
 const membercar_controller = require("../controllers/membercar_controller");
 
+//not working
+//router.post('/member/:member_id/addcar', membercar_controller.MemberCar);
+router.post('/membercar/:member_id/MemberCar', membercar_controller.NewMemberCar);
 router.post('/InsertCarDetails', membercar_controller.InsertCarDetails)
 router.get('/GetCarMember', membercar_controller.GetCarMember)
 router.delete('/DeleteCarReg', membercar_controller.DeleteCarReg)

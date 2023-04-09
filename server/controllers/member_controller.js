@@ -2,6 +2,7 @@
 const pool = require("../db");
 
 module.exports={
+  //working
   SignUp: async (req, res) => {
     try {
       const { f_name, l_name, email, contact_no, gender, password, cnic } = req.body;
@@ -48,10 +49,10 @@ module.exports={
   UpdateUser: async (req, res) => {
     try {
       const { member_id } = req.params;
-      const { f_name, l_name, contact_no, license_no, license_valid_from, gender, password, cnic } = req.body;
+      const { f_name, l_name, contact_no, email, gender, password, cnic } = req.body;
       const updateUser = await pool.query(
-        "UPDATE member SET f_name = $1, l_name=$2, contact_no=$3, license_no=$4, license_valid_from=$5,gender=$6,password=$7,cnic=$8  WHERE member_id =$9",
-        [f_name, l_name, contact_no, license_no, license_valid_from, gender, password, cnic, member_id]
+        "UPDATE member SET f_name = $1, l_name = $2, contact_no = $3, email = $4, gender = $5, password = $6, cnic = $7 WHERE member_id = $8",
+        [f_name, l_name, contact_no, email, gender, password, cnic, member_id]
       );
   
       res.json("User Information was updated!");
@@ -87,7 +88,57 @@ DeleteMember: async(req, res) => {
   }
 },
 
+//working
 getMember: async (req, res) => {
+  try {
+  // const { member_id } = req;
+
+    const members = await pool.query(
+      `SELECT * FROM "member";`//,
+    //  [member_id]
+    );
+   // console.log(members.rows); // log the array of member data
+    res.status(200).json(members.rows);
+    //console.log('hello');
+  } catch (error) {
+    console.error(error);
+    res.status(400).json({ message: "Error retrieving member data" });
+  }
+},
+
+/*NewMemCar: async(req, res) => {
+  try {
+    const { member_id } = req.params;
+    const { name, model, make_year, license_no, license_valid_from, car_regno, car_color } = req.body;
+
+    // Input validation
+    if (!name || !model || !make_year || !license_no || !license_valid_from || !car_regno || !car_color) {
+      return res.status(400).json({ error: 'Invalid input' });
+    }
+
+    // Insert new car details into the car table
+    const newCar = await pool.query(
+      "INSERT INTO car (name, model, make_year, license_no, license_valid_from) VALUES ($1, $2, $3, $4, $5) RETURNING car_id",
+      [name, model, make_year, license_no, license_valid_from]
+    );
+
+    // Get the car ID of the newly inserted car
+    const car_id = newCar.rows[0].car_id;
+
+    // Insert the new car details into the member_car table
+    const newMemberCar = await pool.query(
+      "INSERT INTO member_car (member_id, car_id, car_regno, car_color) VALUES ($1, $2, $3, $4) RETURNING mcar_id",
+      [member_id, car_id, car_regno, car_color]
+    );
+
+    res.status(200).send("Car was added to member!");
+  } catch (err) {
+    console.error(err);
+    res.status(500).send(err.message);
+  }
+}*/
+
+/*getMember: async (req, res) => {
   try {
     const { member_id } = req;
 
@@ -100,8 +151,8 @@ getMember: async (req, res) => {
   } catch {
     res.sendStatus(400);
   }
-},
-}
+}*/
+};
 
 
 
