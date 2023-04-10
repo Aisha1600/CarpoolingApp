@@ -32,6 +32,39 @@ module.exports={
       res.status(500).json({ error: 'Something went wrong' });
     }
   },
+  login: async (req, res) => {
+    try {
+      // Extract email and password from request body
+      const { email, password } = req.body;
+     // Validate input
+      if (!email || !password) {
+        return res.status(400).json({ error: 'Email and password are required' });
+      }
+  
+      // Query the database to find the user with the given email
+      const result = await pool.query('SELECT * FROM member WHERE email = $1 AND password = $2', [email,password]);  
+      // Check if user exists
+      if (result.rows.length === 0) {
+        return res.status(401).json({ error: 'Something wrong' });
+      }
+      console.log(password);
+      // Compare password with the one stored in the database
+      if (result.rows[0].password.trim() !== password) {
+        console.log(result.rows);
+        console.log(password);
+        console.log(result.rows[0].password);
+      //return result.rows[0].password;
+         return res.status(401).json({ error: 'Invalid email or password' });
+
+      }
+      // User is authenticated, return success message
+    return res.status(200).json({ message: 'Login successful' });
+   return console.log('login sucessful');
+    } catch (err) {
+      console.error(err);
+      res.status(500).send(err.message);
+    }
+  },
   LogIn: async (req, res) => {
     try {
     const { email, password } = req.params;

@@ -8,7 +8,7 @@ router.post('/SignUp',MemberController.SignUp);
 //router.post('/member/:member_id/NewMemCar', MemberController.NewMemCar);
 //router.post('/NewMemCar/:member_id', MemberController.NewMemCar);
 //router.post('/member/:member_id/MemberCar', MemberController.NewMemCar);
-router.get('/LogIn', MemberController.LogIn);
+router.post('/login', MemberController.login);
 router.put('/UpdateUser/:member_id',MemberController.UpdateUser);
 router.put('/UpdatePassword/:member_id',MemberController.UpdatePassword);
 
