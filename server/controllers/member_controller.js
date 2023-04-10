@@ -1,5 +1,7 @@
 
 const pool = require("../db");
+const jwt = require('jsonwebtoken');
+const bcrypt = require ('bcrypt');
 
 module.exports={
   //working
@@ -28,6 +30,28 @@ module.exports={
       // Error handling
       console.error(error);
       res.status(500).json({ error: 'Something went wrong' });
+    }
+  },
+  LogIn: async (req, res) => {
+    try {
+    const { email, password } = req.params;
+    const user = await pool.query('SELECT * FROM member WHERE email = $1', [email]);
+    if (user.rows.length === 0) {
+      return res.status(401).json({ message: 'Invalid credentials'});
+    }
+    const validPassword = await bcrypt.compare(password, user.rows[0].password);
+    if (!validPassword) {
+      return res.status(401).json({ message: 'Invalid credentials'});
+    }
+    const token = jwt.sign(
+      { user_id: user.rows[0].member_id },
+      process.env.JWT_SECRET,
+      { expiresIn: '1h' }
+    );
+    res.json({ token });
+    } catch (error) {
+      console.error(error.message);
+      res.status(500).json({ message: 'Server error' });
     }
   },
   GetOneMembers: async (req, res) => {
