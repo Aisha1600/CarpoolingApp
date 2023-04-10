@@ -141,7 +141,7 @@ MemberCar: async(req, res) => {
 //check check check check
 NewMemberCar: async(req, res) => {
     try {
-      const { member_id } = req.params;
+      const { member_id } = req.params;//.member_id;
       const { name, model, make_year, license_no, license_valid_from, car_regno, car_color } = req.body;
   
       // Input validation

@@ -17,7 +17,7 @@ app.use(cors());
 app.use(express.json())
 app.use('/car',car_route)
 app.use('/member',member_route)
-app.use('/membercar',membercar_route)
+app.use('/',membercar_route)
 app.use('/destination',destination_route)
 // app.use('/rides',ride_route)
 // // app.use('/requestcreated',requestcreated_route)

@@ -106,7 +106,7 @@ getMember: async (req, res) => {
   }
 },
 
-/*NewMemCar: async(req, res) => {
+NewMemCar: async(req, res) => {
   try {
     const { member_id } = req.params;
     const { name, model, make_year, license_no, license_valid_from, car_regno, car_color } = req.body;
@@ -136,7 +136,7 @@ getMember: async (req, res) => {
     console.error(err);
     res.status(500).send(err.message);
   }
-}*/
+}
 
 /*getMember: async (req, res) => {
   try {

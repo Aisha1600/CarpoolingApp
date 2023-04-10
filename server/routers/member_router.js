@@ -5,7 +5,8 @@ const MemberController = require("../controllers/member_controller");
 
 // PATCH modify user fields, change password & email- /
 router.post('/SignUp',MemberController.SignUp);
-//router.post('/member/:member_id/MemberCar', MemberController.NewMemCar);
+//router.post('/member/:member_id/NewMemCar', MemberController.NewMemCar);
+//router.post('/NewMemCar/:member_id', MemberController.NewMemCar);
 router.put('/UpdateUser/:member_id',MemberController.UpdateUser);
 router.put('/UpdatePassword/:member_id',MemberController.UpdatePassword);
 
