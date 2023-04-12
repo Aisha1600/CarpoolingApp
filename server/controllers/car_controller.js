@@ -39,7 +39,7 @@ module.exports={
       console.error(err.message);
   }  
   },
-
+  //use this to delete car details
   DeleteCar: async (req, res) => {
     try {
       const { car_id } = req.params;
