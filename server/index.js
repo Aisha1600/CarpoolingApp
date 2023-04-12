@@ -21,9 +21,8 @@ app.use('/',membercar_route)
 app.use('/destination',destination_route)
 app.use('/preference', preference_route)
 app.use('/request', request_route)
-
-// app.use('/rides',ride_route)
-// // app.use('/requestcreated',requestcreated_route)
+//app.use('/ride',ride_route)
+//app.use('/',request_route)
 // app.use('/requestsent',requestsent_route)
 
 

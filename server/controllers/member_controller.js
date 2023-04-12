@@ -1,9 +1,9 @@
 const pool = require("../db");
 const jwt = require('jsonwebtoken');
 const bcrypt = require ('bcrypt');
-
+//need to add jwt tokens 
 module.exports={
-  //working
+  //working and integrated
   SignUp: async (req, res) => {
     try {
       const { f_name, l_name, email, contact_no, gender, password, cnic } = req.body;
@@ -31,6 +31,7 @@ module.exports={
       res.status(500).json({ error: 'Something went wrong' });
     }
   },
+  //working and integrated
   login: async (req, res) => {
     try {
       // Extract email and password from request body
