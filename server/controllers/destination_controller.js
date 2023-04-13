@@ -35,16 +35,17 @@ module.exports={
     //async provides wait
     try {
         const{source_name, s_address} = req.body;
-      console.log("Adding source");
-      await pool.query("INSERT INTO destination(source_name, s_address) VALUES($1, $2)", [source_name, s_address]);
-        res.sendStatus(200);
-    } catch (err) {
 
+        await pool.query("INSERT INTO destination(source_name, s_address) VALUES($1, $2)", [source_name, s_address]);
+        console.log("Adding source");
+
+        return res.status(200).send({
+        message: 'Successful'
+        });
+        } catch (err) {
         return res.status(401).send({
-            error: 'Something went wrong'
-
+            error: 'Something went wrong',
         });   
-    
     }
   },
   GetSource: async(req, res) => {
