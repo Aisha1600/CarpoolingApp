@@ -30,7 +30,7 @@ module.exports={
     }
   },
 
-  //working
+  //working 
   DisplayAllCars: async(req,res)=>{
     try {
       const allCars = await pool.query('SELECT * FROM car');

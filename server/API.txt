@@ -1,0 +1,30 @@
+member controller has:
+sign up 
+login 
+update/edit user details
+delete user
+update password 
+get one/all member details
+
+car:
+delete car details
+
+member_car:
+get a car
+update car details
+add car details
+display all cars for one member (this can be used to get one car too)
+
+
+perference:
+add
+update
+delete
+
+ride:
+
+request:
+
+destination:
+all start locoation end loc update add delete get
+

@@ -5,6 +5,86 @@ const pool = require("../db.js");
 //const pool = require("../db");
 
 module.exports={
+
+
+    addLocationsComplete: async (req, res) => {
+        try {
+          const { d_name, source_name } = req.body;
+      
+          const data = await pool.query(`
+            INSERT INTO destination (d_name, source_name)
+            VALUES ($1, $2)
+            RETURNING *
+          `, [d_name, source_name]);
+      
+          res.status(201).json(data.rows[0]);
+        } catch (err) {
+          console.error(err.message);
+          res.sendStatus(500);
+        }
+      },
+
+      UpdateLocations: async (req, res) => {
+        try {
+          const { destination_id } = req.params;
+          const { d_name, source_name } = req.body;
+      
+          const data = await pool.query(`
+            UPDATE destination
+            SET d_name = $1, source_name = $2
+            WHERE destination_id = $3
+            RETURNING *
+          `, [d_name, source_name, destination_id]);
+      
+          if (data.rows.length === 0) {
+            return res.sendStatus(404);
+          }
+      
+          res.status(200).json(data.rows[0]);
+        } catch (err) {
+          console.error(err.message);
+          res.sendStatus(500);
+        }
+      },      
+
+      deleteLocations: async(req, res) => {
+        try {
+          const { destination_id } = req.params;
+      
+          const result = await pool.query(
+            "DELETE FROM destination WHERE destination_id = $1",
+            [destination_id]
+        );
+      
+          if(result.rowCount === 0) {
+            return res.status(404).json({ error: 'Destination not found' });
+          }
+      
+          res.status(200).json({ message: 'Destination deleted successfully' });
+        } catch (err) {
+          console.error(err.message);
+          res.sendStatus(500);
+        }
+      },
+
+      getLocation: async (req, res) => {
+        try {
+            const { destination_id } = req.params;
+
+          const data = await pool.query(`
+            SELECT *
+            FROM destination where destination_id = $1`,
+            [destination_id]
+          );
+      
+          res.status(200).json(data.rows);
+        } catch (err) {
+          console.error(err.message);
+          res.sendStatus(500);
+        }
+      },            
+      
+      
     UpdateSource: async (req, res) => {
         try {
           const { destination_id } = req.params;

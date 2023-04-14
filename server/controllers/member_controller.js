@@ -163,37 +163,37 @@ getMember: async (req, res) => {
   }
 },
 
-NewMemCar: async(req, res) => {
-  try {
-    const { member_id } = req.params;
-    const { name, model, make_year, license_no, license_valid_from, car_regno, car_color } = req.body;
+// NewMemCar: async(req, res) => {
+//   try {
+//     const { member_id } = req.params;
+//     const { name, model, make_year, license_no, license_valid_from, car_regno, car_color } = req.body;
 
-    // Input validation
-    if (!name || !model || !make_year || !license_no || !license_valid_from || !car_regno || !car_color) {
-      return res.status(400).json({ error: 'Invalid input' });
-    }
+//     // Input validation
+//     if (!name || !model || !make_year || !license_no || !license_valid_from || !car_regno || !car_color) {
+//       return res.status(400).json({ error: 'Invalid input' });
+//     }
 
-    // Insert new car details into the car table
-    const newCar = await pool.query(
-      "INSERT INTO car (name, model, make_year, license_no, license_valid_from) VALUES ($1, $2, $3, $4, $5) RETURNING car_id",
-      [name, model, make_year, license_no, license_valid_from]
-    );
+//     // Insert new car details into the car table
+//     const newCar = await pool.query(
+//       "INSERT INTO car (name, model, make_year, license_no, license_valid_from) VALUES ($1, $2, $3, $4, $5) RETURNING car_id",
+//       [name, model, make_year, license_no, license_valid_from]
+//     );
 
-    // Get the car ID of the newly inserted car
-    const car_id = newCar.rows[0].car_id;
+//     // Get the car ID of the newly inserted car
+//     const car_id = newCar.rows[0].car_id;
 
-    // Insert the new car details into the member_car table
-    const newMemberCar = await pool.query(
-      "INSERT INTO member_car (member_id, car_id, car_regno, car_color) VALUES ($1, $2, $3, $4) RETURNING mcar_id",
-      [member_id, car_id, car_regno, car_color]
-    );
+//     // Insert the new car details into the member_car table
+//     const newMemberCar = await pool.query(
+//       "INSERT INTO member_car (member_id, car_id, car_regno, car_color) VALUES ($1, $2, $3, $4) RETURNING mcar_id",
+//       [member_id, car_id, car_regno, car_color]
+//     );
 
-    res.status(200).send("Car was added to member!");
-  } catch (err) {
-    console.error(err);
-    res.status(500).send(err.message);
-  }
-}
+//     res.status(200).send("Car was added to member!");
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).send(err.message);
+//   }
+// }
 
 /*getMember: async (req, res) => {
   try {

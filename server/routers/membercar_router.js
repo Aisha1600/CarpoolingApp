@@ -4,12 +4,15 @@ const router = require('express').Router();
 //const router = express.Router();
 const membercar_controller = require("../controllers/membercar_controller");
 
-//not working
 //router.post('/member/:member_id/addcar', membercar_controller.MemberCar);
 router.post('/member/:member_id/car', membercar_controller.NewMemberCar);
 router.post('/member/:member_id/car/:car_id', membercar_controller.updateCarMember);
 router.post('/member/:member_id/car/updatem', membercar_controller.UpdateCarM);
 router.get('/member/:member_id/car', membercar_controller.GetaCarMember);
+router.get('/member/:member_id/car/allcars', membercar_controller.getAllCarsOfMember);
+
+
+
 
 //router.put('/member/:member_id/car/:car_id', membercar_controller.updateCarMember);
 //router.post('/InsertCarDetails', membercar_controller.InsertCarDetails)
