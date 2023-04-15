@@ -22,8 +22,22 @@ update
 delete
 
 ride:
+offer ride takes all details including destination
+edit offer
+delete an offer
+rate a ride //not working
+get a ride (not done)
+get a list of rides available (not done)
+get list of avaialble and previous rides by carpool (not done)
 
-request:
+
+request: (not started)
+accept/rej offer request
+create a user request history
+fliter request based on locoation
+send ride request
+see if ride request is accepted or not
+
 
 destination:
 all start locoation end loc update add delete get

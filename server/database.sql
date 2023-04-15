@@ -137,6 +137,13 @@ ALTER TABLE destination
 DROP COLUMN D_ADDRESS,
 DROP COLUMN S_ADDRESS;
 
+ALTER TABLE ride
+ALTER COLUMN contribution_per_head TYPE INTEGER USING contribution_per_head::integer,
+
+ALTER TABLE ride
+ALTER COLUMN ride_rating SET DEFAULT NULL;
+
+
 
 
 
