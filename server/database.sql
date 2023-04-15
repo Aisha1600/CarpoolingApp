@@ -140,8 +140,40 @@ DROP COLUMN S_ADDRESS;
 ALTER TABLE ride
 ALTER COLUMN contribution_per_head TYPE INTEGER USING contribution_per_head::integer,
 
+--more changed gdi im tired cmon 
+
 ALTER TABLE ride
 ALTER COLUMN ride_rating SET DEFAULT NULL;
+
+ALTER TABLE REQUEST DROP COLUMN STATUS;
+
+--smol apis for this
+CREATE TABLE REQUEST_S (
+   STATUS_ID SERIAL PRIMARY KEY,
+   STATUS request NOT NULL
+);
+
+ALTER TABLE REQUEST_S DROP COLUMN STATUS;
+
+-- Add a new STATUS column to the REQUEST_STATUS table
+ALTER TABLE REQUEST_STATUS ADD COLUMN STATUS req NOT NULL DEFAULT 'PENDING';
+
+-- Add a foreign key reference to the request_status table from the REQUEST table
+ALTER TABLE REQUEST ADD COLUMN status_id INT NOT NULL REFERENCES request_status(status_id);
+
+-- Create a new table for RIDE_RATING
+CREATE TABLE RIDE_RATING (
+   RATING_ID SERIAL PRIMARY KEY,
+   RIDE_ID INT NOT NULL,
+   RATING NUMERIC(2,1) NOT NULL
+);
+
+-- Remove the RIDE_RATING column from the RIDE table
+ALTER TABLE RIDE DROP COLUMN RIDE_RATING;
+
+-- Add a foreign key reference to the RIDE_RATING table from the RIDE table
+ALTER TABLE RIDE ADD COLUMN RATING_ID INT REFERENCES RIDE_RATING(RATING_ID) ON DELETE SET NULL;
+
 
 
 

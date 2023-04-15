@@ -30,6 +30,12 @@ get a ride (not done)
 get a list of rides available (not done)
 get list of avaialble and previous rides by carpool (not done)
 
+ride_rating: (not done)
+get and insert api
+
+request_status: (not done)
+get insert update
+
 
 request: (not started)
 accept/rej offer request
