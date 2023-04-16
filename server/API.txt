@@ -1,30 +1,45 @@
+//(I) means the api is integrated and working from the frontend
+
 member controller has:
-sign up 
-login 
+sign up (I)
+login (I)
 update/edit user details
 delete user
-update password 
+update password (I)
 get one/all member details
 
 car:
 delete car details
 
+//will be integrated where we have a sliding pop up on the offer carpool screen
+//need to make the frontend for these apis
 member_car:
 get a car
 update car details
-add car details
+add car details (I)
 display all cars for one member (this can be used to get one car too)
 
 
-perference:
+//will be integrated on the offer carpool screen 
+//where api will be passed the inputs taken from
+//preference related input fields
+preference:
 add
+------------------------------------------------
+no frontend functionality for these at the moment
+------------------------------------------------
 update
 delete
+
 
 ride:
 
 request:
 
+
+//will be integrated on the offer carpool screen 
+//where api will be passed the inputs taken from
+//location related input fields
 destination:
 all start locoation end loc update add delete get
 

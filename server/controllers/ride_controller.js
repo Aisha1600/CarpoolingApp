@@ -2,7 +2,6 @@ const pool = require("../db");
 
 module.exports={
    CreateARide:  async (req, res) => {
-        
         try {
             const {destinationId,mcarId,createdOn,travelStartTime,seatsOffered,contributionPerHead,rideRating} = req.body;
           await pool.query(
