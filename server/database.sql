@@ -173,6 +173,16 @@ ALTER TABLE RIDE DROP COLUMN RIDE_RATING;
 -- Add a foreign key reference to the RIDE_RATING table from the RIDE table
 ALTER TABLE RIDE ADD COLUMN RATING_ID INT REFERENCES RIDE_RATING(RATING_ID) ON DELETE SET NULL;
 
+--for jwt tokens
+CREATE TABLE jwt_tokens (
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER NOT NULL,
+    token TEXT NOT NULL
+);
+
+ ALTER TABLE jwt_tokens ADD COLUMN member_id INTEGER REFERENCES member(MEMBER_ID);
+
+
 
 
 

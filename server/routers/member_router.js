@@ -1,15 +1,31 @@
 //ALL OK!
+
 const pool = require('../db.js');
 const router = require('express').Router();
 const MemberController = require("../controllers/member_controller");
+const axios = require('axios');
+
+// // Set the Authorization header with the JWT token
+// //const token = localStorage.getItem('jwtToken');
+// const config = {
+//   headers: { Authorization: `Bearer ${token}` }
+// };
+
+// // Send PUT request to update user information
+// //const response = await 
+// axios.put(`/UpdateUserr/${member_id}`, { f_name, l_name, contact_no, email, gender, password, cnic }, config);
+
 
 // PATCH modify user fields, change password & email- /
 router.post('/SignUp',MemberController.SignUp);
 //router.post('/member/:member_id/NewMemCar', MemberController.NewMemCar);
 //router.post('/NewMemCar/:member_id', MemberController.NewMemCar);
 //router.post('/member/:member_id/MemberCar', MemberController.NewMemCar);
-router.post('/login', MemberController.login);
+//router.post('/login', MemberController.login); //this one is working without jwt auth
+router.post('/loogin', MemberController.loogin); 
+router.delete('/logout/:member_id', MemberController.logout); 
 router.put('/UpdateUser/:member_id',MemberController.UpdateUser);
+router.put('/UpdateUserr/:member_id',MemberController.UpdateUserr);
 router.put('/UpdatePassword/:member_id',MemberController.UpdatePassword);
 
 

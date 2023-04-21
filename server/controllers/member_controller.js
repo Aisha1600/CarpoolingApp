@@ -1,6 +1,8 @@
 const pool = require("../db");
 const jwt = require('jsonwebtoken');
 const bcrypt = require ('bcrypt');
+const token = "carpool";
+const jwtSecret = 'itsworking'; 
 //need to add jwt tokens 
 module.exports={
   //working and integrated
@@ -31,7 +33,7 @@ module.exports={
       res.status(500).json({ error: 'Something went wrong' });
     }
   },
-  //working and integrated
+  //working and integrated integrate the one below
   login: async (req, res) => {
     try {
       // Extract email and password from request body
@@ -65,28 +67,94 @@ module.exports={
       res.status(500).send(err.message);
     }
   },
-  LogIn: async (req, res) => {
+
+  //need to integrate this one
+  loogin: async (req, res) => {
     try {
-    const { email, password } = req.params;
-    const user = await pool.query('SELECT * FROM member WHERE email = $1', [email]);
-    if (user.rows.length === 0) {
-      return res.status(401).json({ message: 'Invalid credentials'});
-    }
-    const validPassword = await bcrypt.compare(password, user.rows[0].password);
-    if (!validPassword) {
-      return res.status(401).json({ message: 'Invalid credentials'});
-    }
-    const token = jwt.sign(
-      { user_id: user.rows[0].member_id },
-      process.env.JWT_SECRET,
-      { expiresIn: '1h' }
-    );
-    res.json({ token });
-    } catch (error) {
-      console.error(error.message);
-      res.status(500).json({ message: 'Server error' });
+      // Extract email and password from request body
+      const { email, password } = req.body;
+      // Validate input
+      if (!email || !password) {
+        return res.status(400).json({ error: 'Email and password are required' });
+      }
+  
+      // Query the database to find the user with the given email
+      const result = await pool.query('SELECT * FROM member WHERE email = $1 AND password = $2', [email, password]);
+      // Check if user exists
+      if (result.rows.length === 0) {
+        return res.status(401).json({ error: 'Invalid email or password' });
+      }
+     // console.log('Result from member table:', result);
+  
+      // Generate a JWT
+      const payload = { userId: result.rows[0].member_id };
+      const token = jwt.sign(payload, jwtSecret, { expiresIn: '10h' });
+  
+      // Insert the generated token into the jwt_tokens table for the logged-in user
+      const Memberid = result.rows[0].member_id;
+      // console.log(result.rows[0].member_id);
+      const insertQuery = 'INSERT INTO jwt_tokens (member_id, token) VALUES ($1, $2)';
+      await pool.query(insertQuery, [Memberid, token]);
+  
+      // Return success message with token
+      return res.status(200).json({ message: 'Login successful', token: token });
+    } catch (err) {
+      console.error(err);
+      res.status(500).send(err.message);
     }
   },
+  logout: async (req, res) => {
+    try {
+      const { member_id } = req.params;
+      // Delete the token from the jwt_tokens table for the logged-out user
+      const deleteQuery = 'DELETE FROM jwt_tokens WHERE member_id = $1';
+      await pool.query(deleteQuery, [member_id]);
+  
+      // Return success message
+      return res.status(200).json({ message: 'Logout successful' });
+    } catch (err) {
+      console.error(err);
+      res.status(500).send(err.message);
+    }
+  },
+  //with jwt auth
+  UpdateUserr: async (req, res) => {
+    try {
+      const { member_id } = req.params;
+      const { f_name, l_name, contact_no, email, gender, password, cnic } = req.body;
+      
+      // Verify the JWT token in the Authorization header
+      const authHeader = req.headers.authorization;
+      const token = authHeader && authHeader.split(' ')[1];
+      if (!token) {
+        return res.status(401).json({ error: 'Missing JWT token' });
+      }
+      const decoded = jwt.verify(token, jwtSecret);
+      const userId = decoded.member_id;
+      
+      // Check if the user has permission to update this user's information
+      const result = await pool.query('SELECT * FROM member WHERE member_id = $1', [member_id]);
+      if (result.rows.length === 0) {
+        return res.status(404).json({ error: 'User not found' });
+      }
+      const user = result.rows[0];
+      if (user.id !== userId) {
+        return res.status(403).json({ error: 'Unauthorized' });
+      }
+      
+      // Update the user information in the database
+      const updateUser = await pool.query(
+        "UPDATE member SET f_name = $1, l_name = $2, contact_no = $3, email = $4, gender = $5, password = $6, cnic = $7 WHERE member_id = $8",
+        [f_name, l_name, contact_no, email, gender, password, cnic, member_id]
+      );
+  
+      res.json("User Information was updated!");
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).json({ error: "Failed to update user information" });
+    }
+  },
+  
   GetOneMembers: async (req, res) => {
     try {
       const { member_id } = req.params;

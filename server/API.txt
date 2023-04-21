@@ -1,12 +1,13 @@
 //(I) means the api is integrated and working from the frontend
 
 member controller has:
-sign up (I)
-login (I)
-update/edit user details
+sign up (I) jwt auth
+login (I) JWT AUTH
+update/edit user details JWT AUTH
 delete user
 update password (I)
 get one/all member details
+logout JWT AUTH
 
 car:
 delete car details
