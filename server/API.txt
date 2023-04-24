@@ -1,4 +1,5 @@
 //(I) means the api is integrated and working from the frontend
+//python api also needs to be integrated 
 
 member controller has:
 sign up (I) jwt auth

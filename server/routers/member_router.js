@@ -24,7 +24,7 @@ router.post('/SignUp',MemberController.SignUp);
 //router.post('/login', MemberController.login); //this one is working without jwt auth
 router.post('/loogin', MemberController.loogin); 
 router.delete('/logout/:member_id', MemberController.logout); 
-router.put('/UpdateUser/:member_id',MemberController.UpdateUser);
+router.put('/Update/:member_id',MemberController.Update);
 router.put('/UpdateUserr/:member_id',MemberController.UpdateUserr);
 router.put('/UpdatePassword/:member_id',MemberController.UpdatePassword);
 
