@@ -27,6 +27,8 @@ router.delete('/logout/:member_id', MemberController.logout);
 router.put('/Update/:member_id',MemberController.Update);
 //router.put('/UpdateUserr/:member_id',MemberController.UpdateUserr);
 router.put('/UpdatePassword/:member_id',MemberController.UpdatePassword);
+router.put('/UpdatePass',MemberController.UpdatePass);
+
 
 
 // DELETE specified user - /
