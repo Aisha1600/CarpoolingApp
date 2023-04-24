@@ -1,14 +1,22 @@
 //(I) means the api is integrated and working from the frontend
 //python api also needs to be integrated 
 
+TODO LIST:
+- TEST THE ML CODE 
+- EXTRACT CORDINATES FROM GOOGLE MAPS AND STORE IN DB FOR ML CODE
+- JWT IMPLEMENTATION ON APIS
+- INTEGRATION OF REMAINING APIS
+- CHECK EVERYTHING BEFORE SUBMISSION DATE
+
+
 member controller has:
 sign up (I) jwt auth
 login (I) JWT AUTH
 update/edit user details JWT AUTH
 delete user
-update password (I)
+update password (I) JWT AUTH
 get one/all member details
-logout JWT AUTH
+logout JWT AUTH 
 
 car:
 delete car details
