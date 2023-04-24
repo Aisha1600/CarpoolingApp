@@ -25,7 +25,15 @@ router.post('/SignUp',MemberController.SignUp);
 router.post('/loogin', MemberController.loogin); 
 router.delete('/logout', MemberController.logout); 
 router.put('/Update/:member_id',MemberController.Update);
+<<<<<<< Updated upstream
 //router.put('/UpdateUserr/:member_id',MemberController.UpdateUserr);
+=======
+<<<<<<< HEAD
+// router.put('/UpdateUserr/:member_id',MemberController.UpdateUserr);
+=======
+//router.put('/UpdateUserr/:member_id',MemberController.UpdateUserr);
+>>>>>>> dc1b7f6dcd1c67b013fdc6f4b1da4fe2f4532004
+>>>>>>> Stashed changes
 router.put('/UpdatePassword/:member_id',MemberController.UpdatePassword);
 router.put('/UpdatePass',MemberController.UpdatePass);
 
