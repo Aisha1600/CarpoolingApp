@@ -39,16 +39,28 @@ cur.execute("SELECT * FROM PREFERENCE WHERE MEMBER_ID = %s", (user_id,))
 user_preferences = cur.fetchone()
 
 # Get user's travel start time from ride table
-cur.execute("SELECT TRAVEL_START_TIME FROM RIDE WHERE MEMBER_ID = %s ORDER BY CREATED_ON DESC LIMIT 1", (user_id,))
-user_travel_start_time = cur.fetchone()[0]
-
+cur.execute("SELECT r.travel_start_time FROM request req INNER JOIN ride r ON req.ride_id = r.ride_id WHERE req.member_id = %s ORDER BY req.created_on DESC LIMIT 1;", (user_id,))
+#user_travel_start_time = cur.fetchone()[0]
+#user_travel_start_time = None
+result = cur.fetchone()
+if result:
+    user_travel_start_time = result[0]
+else:
+    user_travel_start_time = None
 # Get user's most frequently traveled destination from destination table
-cur.execute("SELECT D_NAME FROM RIDE JOIN DESTINATION ON RIDE.DESTINATION_ID = DESTINATION.DESTINATION_ID WHERE MEMBER_ID = %s GROUP BY D_NAME ORDER BY COUNT(*) DESC LIMIT 1", (user_id,))
-user_frequent_destination = cur.fetchone()[0]
+cur.execute("SELECT D_NAME FROM REQUEST JOIN RIDE ON REQUEST.RIDE_ID = RIDE.RIDE_ID JOIN DESTINATION ON RIDE.DESTINATION_ID = DESTINATION.DESTINATION_ID WHERE REQUEST.MEMBER_ID = %s GROUP BY D_NAME ORDER BY COUNT(*) DESC LIMIT 1", (user_id,))
+#user_frequent_destination = cur.fetchone()[0]
+result_d = cur.fetchone()
+if result_d is not None:
+    user_frequent_destination = result[0]
+else:
+    # handle the case where no rows were returned
+    user_frequent_destination = None
+    
 
 # Limit the number of rides retrieved based on distance from user's frequent destination
 MAX_DISTANCE = 10 # in kilometers
-cur.execute("SELECT * FROM RIDE WHERE MEMBER_ID != %s", (user_id,))
+cur.execute("SELECT r.* FROM ride r JOIN request req ON r.ride_id = req.ride_id WHERE req.member_id = %s", (user_id,))
 all_rides = cur.fetchall()
 rides_within_distance = []
 for ride in all_rides:
