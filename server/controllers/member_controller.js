@@ -189,15 +189,8 @@ module.exports = {
       res.sendStatus(500);
     }
   },
-<<<<<<< Updated upstream
 
-=======
-<<<<<<< HEAD
-  
-=======
 
->>>>>>> dc1b7f6dcd1c67b013fdc6f4b1da4fe2f4532004
->>>>>>> Stashed changes
   UpdateUser: async (req, res) => {
     try {
       const { member_id } = req.params;
@@ -214,11 +207,7 @@ module.exports = {
     }
   },
 
-<<<<<<< Updated upstream
-=======
-<<<<<<< HEAD
-=======
->>>>>>> Stashed changes
+
   //jwt authentication 
   UpdatePass: async (req, res) => {
     try {
@@ -258,10 +247,7 @@ module.exports = {
     }
   },
   
-<<<<<<< Updated upstream
-=======
->>>>>>> dc1b7f6dcd1c67b013fdc6f4b1da4fe2f4532004
->>>>>>> Stashed changes
+
   UpdatePassword: async (req, res) => {
     try {
       const { member_id } = req.params;
