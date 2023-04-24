@@ -108,11 +108,16 @@ module.exports = {
   //integrate this
   logout: async (req, res) => {
     try {
-      const { member_id } = req.params;
+      // Retrieve the token from the request header
+      const token = req.headers.authorization.split(' ')[1];
+  
       // Delete the token from the jwt_tokens table for the logged-out user
+      const decoded = jwt.verify(token, jwtSecret);
+      const userId = decoded.userId;
+  
       const deleteQuery = 'DELETE FROM jwt_tokens WHERE member_id = $1';
-      await pool.query(deleteQuery, [member_id]);
-
+      await pool.query(deleteQuery, [userId]);
+  
       // Return success message
       return res.status(200).json({ message: 'Logout successful' });
     } catch (err) {

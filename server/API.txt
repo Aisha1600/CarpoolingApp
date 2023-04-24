@@ -14,9 +14,9 @@ sign up (I) jwt auth
 login (I) JWT AUTH
 update/edit user details JWT AUTH
 delete user
-update password (I)
+update password (I) JWT AUTH
 get one/all member details
-logout JWT AUTH
+logout JWT AUTH 
 
 car:
 delete car details
