@@ -4,6 +4,7 @@ const ride_controller = require("../controllers/ride_controller.js");
 
 //working
 router.post('/member_car/:mcar_id/createRidee', ride_controller.CreateARidee)
+router.post('/member/:member_id/CreateRide', ride_controller.CreateRide)
 //working
 router.post('/ride/:ride_id', ride_controller.EditARide)
 //working

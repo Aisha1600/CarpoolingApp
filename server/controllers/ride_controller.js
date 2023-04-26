@@ -2,6 +2,42 @@ const pool = require("../db");
 
 module.exports={
 
+  //takes destination and ride details at once via member_id
+  CreateRide:  async (req, res) => {
+    try {
+      const { member_id } = req.params; // get the member_id from the params
+      const { destination_name, source_name, created_on, travel_start_time, seats_offered, contribution_per_head } = req.body;
+  
+      // get the mcar_id from the member_car table using the member_id
+      const mcarData = await pool.query(
+        `SELECT mcar_id FROM member_car WHERE member_id = $1`,
+        [member_id]
+      );
+      const mcar_id = mcarData.rows[0].mcar_id;
+  
+      // Insert the destination details into the destination table
+      const destinationData = await pool.query(
+        `INSERT INTO destination (d_name, source_name)
+         VALUES ($1, $2)
+         RETURNING destination_id`,
+        [destination_name, source_name]
+      );
+      const destination_id = destinationData.rows[0].destination_id;
+  
+      // Insert the ride details into the ride table
+      await pool.query(
+        `INSERT INTO ride (destination_id, mcar_id, member_id, created_on, travel_start_time, seats_offered, contribution_per_head)
+         VALUES ($1, $2, $3, $4, $5, $6, $7)`,
+        [destination_id, mcar_id, member_id, created_on, travel_start_time, seats_offered, contribution_per_head]
+      );
+  
+      res.status(200).send('Ride created');
+    } catch (err) {
+      console.error(err);
+      res.status(500).send('Error creating ride');
+    }
+  },  
+
   //takes destination and ride details at once
   CreateARidee:  async (req, res) => {
     try {
