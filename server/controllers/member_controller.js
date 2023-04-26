@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const token = "carpool";
 const jwtSecret = 'itsworking';
+
 //need to add jwt tokens 
 module.exports = {
   //working and integrated
@@ -189,6 +190,7 @@ module.exports = {
     }
   },
 
+
   UpdateUser: async (req, res) => {
     try {
       const { member_id } = req.params;
@@ -204,6 +206,7 @@ module.exports = {
       res.status(500).json({ error: "Failed to update user information" });
     }
   },
+
 
   //jwt authentication 
   UpdatePass: async (req, res) => {
@@ -244,6 +247,7 @@ module.exports = {
     }
   },
   
+
   UpdatePassword: async (req, res) => {
     try {
       const { member_id } = req.params;
