@@ -46,7 +46,6 @@ ride:
 offer ride takes all details including destination
 edit offer
 delete an offer
-rate a ride //not working
 get a ride (not done)
 get a list of rides available (not done)
 get list of avaialble and previous rides by carpool (not done)
