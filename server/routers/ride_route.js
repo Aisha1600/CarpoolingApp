@@ -1,9 +1,16 @@
-const express = require("express");
-const router = express.Router();
-const ride_controller = require('../controllers/ride_controller')
+const pool = require('../db.js');
+const router = require('express').Router();
+const ride_controller = require("../controllers/ride_controller.js");
 
-router.post('/createRide', ride_controller.CreateARide)
-router.delete('/delete/:id', ride_controller.DeleteRide)
-router.get('/getAride/:id', ride_controller.GetARide)
-router.get('/Getallrides', ride_controller.getAllRides)
-router.put('/updaterating/:id', ride_controller.updateRideRating)
+//working
+router.post('/member_car/:mcar_id/createRidee', ride_controller.CreateARidee)
+//working
+router.post('/ride/:ride_id', ride_controller.EditARide)
+//working
+router.delete('/deleteride/:ride_id', ride_controller.DeleteARide)
+// router.get('/getAride/:id', ride_controller.GetARide)
+// router.get('/Getallrides', ride_controller.getAllRides)
+//not checked yet
+router.post('/riderate/:ride_id', ride_controller.RideRating)
+
+module.exports = router;

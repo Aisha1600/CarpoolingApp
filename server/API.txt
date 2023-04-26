@@ -1,0 +1,75 @@
+//(I) means the api is integrated and working from the frontend
+//python api also needs to be integrated 
+
+TODO LIST:
+- TEST THE ML CODE 
+- EXTRACT CORDINATES FROM GOOGLE MAPS AND STORE IN DB FOR ML CODE
+- JWT IMPLEMENTATION ON APIS
+- INTEGRATION OF REMAINING APIS
+- CHECK EVERYTHING BEFORE SUBMISSION DATE
+
+
+member controller has:
+sign up (I) jwt auth
+login (I) JWT AUTH
+update/edit user details JWT AUTH
+delete user
+update password (I) JWT AUTH
+get one/all member details
+logout JWT AUTH 
+
+car:
+delete car details
+
+//will be integrated where we have a sliding pop up on the offer carpool screen
+//need to make the frontend for these apis
+member_car:
+get a car
+update car details
+add car details (I)
+display all cars for one member (this can be used to get one car too)
+
+
+//will be integrated on the offer carpool screen 
+//where api will be passed the inputs taken from
+//preference related input fields
+preference:
+add
+------------------------------------------------
+no frontend functionality for these at the moment
+------------------------------------------------
+update
+delete
+
+
+ride:
+offer ride takes all details including destination
+edit offer
+delete an offer
+rate a ride //not working
+get a ride (not done)
+get a list of rides available (not done)
+get list of avaialble and previous rides by carpool (not done)
+
+ride_rating: (not done)
+get and insert api
+
+request_status: (not done)
+get insert update
+
+
+request: (not started)
+accept/rej offer request
+create a user request history
+fliter request based on locoation
+send ride request
+see if ride request is accepted or not
+
+
+
+//will be integrated on the offer carpool screen 
+//where api will be passed the inputs taken from
+//location related input fields
+destination:
+all start locoation end loc update add delete get
+
