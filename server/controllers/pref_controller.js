@@ -35,6 +35,7 @@ module.exports={
           res.status(500).send('Error adding preference.');
         }
       },
+      //no frontend functionality for now 
       //user deletes a preference
       //working!!
       DeletePref: async (req, res) => {

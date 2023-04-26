@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const token = "carpool";
 const jwtSecret = 'itsworking';
+
 //need to add jwt tokens 
 module.exports = {
   //working and integrated
@@ -108,11 +109,16 @@ module.exports = {
   //integrate this
   logout: async (req, res) => {
     try {
-      const { member_id } = req.params;
+      // Retrieve the token from the request header
+      const token = req.headers.authorization.split(' ')[1];
+  
       // Delete the token from the jwt_tokens table for the logged-out user
+      const decoded = jwt.verify(token, jwtSecret);
+      const userId = decoded.userId;
+  
       const deleteQuery = 'DELETE FROM jwt_tokens WHERE member_id = $1';
-      await pool.query(deleteQuery, [member_id]);
-
+      await pool.query(deleteQuery, [userId]);
+  
       // Return success message
       return res.status(200).json({ message: 'Logout successful' });
     } catch (err) {
@@ -130,7 +136,7 @@ module.exports = {
       // Retrieve the token from the database for the logged-in user
       const tokenQuery = 'SELECT token FROM jwt_tokens WHERE member_id = $1';
       const result = await pool.query(tokenQuery, [member_id]);
-      console.log(result);
+      //console.log(result);
       if (result.rows.length === 0) {
         return res.status(401).json({ error: 'User not authorized' });
       }
@@ -165,6 +171,8 @@ module.exports = {
     }
   },  
 
+  
+
   GetOneMembers: async (req, res) => {
     try {
       const { member_id } = req.params;
@@ -181,6 +189,8 @@ module.exports = {
       res.sendStatus(500);
     }
   },
+
+
   UpdateUser: async (req, res) => {
     try {
       const { member_id } = req.params;
@@ -196,6 +206,48 @@ module.exports = {
       res.status(500).json({ error: "Failed to update user information" });
     }
   },
+
+
+  //jwt authentication 
+  UpdatePass: async (req, res) => {
+    try {
+      const { password } = req.body;
+  
+      // Retrieve the token from the request header
+      const token = req.headers.authorization.split(' ')[1];
+  
+      // Verify the JWT token and extract the member_id
+      const decoded = jwt.verify(token, jwtSecret);
+      const userId = decoded.userId;
+      console.log(`The extracted member_id from the JWT token is: ${userId}`);
+      console.log('Decoded JWT token:', decoded);
+  
+      // Check if the user has permission to update this user's password
+      const userQuery = 'SELECT * FROM member WHERE member_id = $1';
+      const userResult = await pool.query(userQuery, [userId]);
+      if (userResult.rows.length === 0) {
+        return res.status(404).json({ error: 'User not found' });
+      }
+      const user = userResult.rows[0];
+      if (user.member_id !== userId) {
+        return res.status(403).json({ error: 'Unauthorized' });
+      }
+  
+      // Update the user's password in the database
+      const updatePasswordQuery = `
+        UPDATE member 
+        SET password = $1 
+        WHERE member_id = $2`;
+      const updatePasswordResult = await pool.query(updatePasswordQuery, [password, userId]);
+  
+      res.json("User's password was updated!");
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).json({ error: "Failed to update user's password" });
+    }
+  },
+  
+
   UpdatePassword: async (req, res) => {
     try {
       const { member_id } = req.params;
@@ -210,6 +262,7 @@ module.exports = {
       console.error(err.message);
     }
   },
+
   DeleteMember: async (req, res) => {
     try {
       const { member_id } = req.params;

@@ -23,10 +23,15 @@ router.post('/SignUp',MemberController.SignUp);
 //router.post('/member/:member_id/MemberCar', MemberController.NewMemCar);
 //router.post('/login', MemberController.login); //this one is working without jwt auth
 router.post('/loogin', MemberController.loogin); 
-router.delete('/logout/:member_id', MemberController.logout); 
+router.delete('/logout', MemberController.logout); 
 router.put('/Update/:member_id',MemberController.Update);
-router.put('/UpdateUserr/:member_id',MemberController.UpdateUserr);
+
+//router.put('/UpdateUserr/:member_id',MemberController.UpdateUserr);
+// router.put('/UpdateUserr/:member_id',MemberController.UpdateUserr);
+//router.put('/UpdateUserr/:member_id',MemberController.UpdateUserr);
 router.put('/UpdatePassword/:member_id',MemberController.UpdatePassword);
+router.put('/UpdatePass',MemberController.UpdatePass);
+
 
 
 // DELETE specified user - /
