@@ -200,6 +200,10 @@ CREATE TABLE PASSENGERS (
 
  ALTER TABLE ride ADD COLUMN status_id INT NULL REFERENCES request_s(status_id);
 
+ -- new changes for ride token
+ ALTER TABLE ride ADD COLUMN ride_token TEXT;
+
+
 
 
 

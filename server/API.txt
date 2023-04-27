@@ -15,7 +15,8 @@ login (I) JWT AUTH
 update/edit user details JWT AUTH
 delete user
 update password (I) JWT AUTH
-get one/all member details
+get one (do this today)
+/all member details
 logout JWT AUTH 
 
 car:
@@ -26,15 +27,15 @@ delete car details
 member_car:
 get a car
 update car details
-add car details (I)
-display all cars for one member (this can be used to get one car too)
+add car details (I) (do this today)
+display all cars for one member (this can be used to get one car too) this
 
 
 //will be integrated on the offer carpool screen 
 //where api will be passed the inputs taken from
 //preference related input fields
 preference:
-add
+add (change)
 ------------------------------------------------
 no frontend functionality for these at the moment
 ------------------------------------------------
@@ -43,19 +44,13 @@ delete
 
 
 ride:
-offer ride takes all details including destination
+offer ride takes all details including destination JWT AUTH
 edit offer
 delete an offer
-get a ride (not done)
-get a list of rides available (not done)
+
+//need to do these 
+get a list of rides available JWT AUTH
 get list of avaialble and previous rides by carpool (not done)
-
-ride_rating: (not done)
-get and insert api
-
-request_status: (not done)
-get insert update
-
 
 request: (not started)
 accept/rej offer request
@@ -63,6 +58,12 @@ create a user request history
 fliter request based on locoation
 send ride request
 see if ride request is accepted or not
+
+(Aamna)
+pasaanger apis
+rating api
+request status api
+request api
 
 
 
