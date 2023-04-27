@@ -49,7 +49,6 @@ CREATE TABLE DESTINATION(
 --the date and time of the journey; the number of seats available; 
 --and contribution per head. The contribution per head is the amount that each co-traveler has to pay towards ride expenses.
 
-
 CREATE TABLE RIDE(
    RIDE_ID SERIAL PRIMARY KEY NOT NULL,
    DESTINATION_ID INT NOT NULL,
@@ -61,7 +60,6 @@ CREATE TABLE RIDE(
    FOREIGN KEY (DESTINATION_ID) REFERENCES DESTINATION (DESTINATION_ID) ON DELETE CASCADE,
    FOREIGN KEY (MCAR_ID) REFERENCES MEMBER_CAR (MCAR_ID) ON DELETE CASCADE
 );
-
 
 --Ride Request – Members can look at the list of available rides from one city to another or put in a request for a 
 --specific trip. We definitely need one table to store details about such requests. 
@@ -178,6 +176,31 @@ CREATE TABLE jwt_tokens (
     token TEXT NOT NULL
 );
  ALTER TABLE jwt_tokens ADD COLUMN member_id INTEGER REFERENCES member(MEMBER_ID);
+
+ -- more changes to the database
+ALTER TABLE ride ADD COLUMN member_id INTEGER REFERENCES member(MEMBER_ID);
+ALTER TABLE request ADD COLUMN destination_id INTEGER REFERENCES destination(destination_id);
+
+-- passengers table 
+CREATE TABLE PASSENGERS (
+   PASSENGER_ID SERIAL PRIMARY KEY,
+   RIDE_ID INT NOT NULL,
+   PASSENGER1_ID INT UNIQUE NOT NULL,
+   PASSENGER2_ID INT UNIQUE,
+   PASSENGER3_ID INT UNIQUE,
+   PASSENGER4_ID INT UNIQUE,
+   PASSENGER5_ID INT UNIQUE,
+   FOREIGN KEY (RIDE_ID) REFERENCES RIDE (RIDE_ID) ON DELETE CASCADE,
+   FOREIGN KEY (PASSENGER1_ID) REFERENCES MEMBER (MEMBER_ID) ON DELETE CASCADE,
+   FOREIGN KEY (PASSENGER2_ID) REFERENCES MEMBER (MEMBER_ID) ON DELETE CASCADE,
+   FOREIGN KEY (PASSENGER3_ID) REFERENCES MEMBER (MEMBER_ID) ON DELETE CASCADE,
+   FOREIGN KEY (PASSENGER4_ID) REFERENCES MEMBER (MEMBER_ID) ON DELETE CASCADE,
+   FOREIGN KEY (PASSENGER5_ID) REFERENCES MEMBER (MEMBER_ID) ON DELETE CASCADE
+);
+
+ ALTER TABLE ride ADD COLUMN status_id INT NULL REFERENCES request_s(status_id);
+
+
 
 
 
