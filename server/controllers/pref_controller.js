@@ -4,6 +4,8 @@ module.exports={
 
     //changes made
     //working!
+    //token should be sent here to get decoded and take out the member_id from it
+    //the controller for this will have to be changed as well 
   AddPrefer: async (req, res) => {
     try {
         const { member_id } = req.params;

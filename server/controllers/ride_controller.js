@@ -71,6 +71,10 @@ module.exports={
       );
       const mcar_id = mcarData.rows[0].mcar_id;
   
+      //Convert datetime strings into JavaScript Date objects
+      // const createdOnDate = new Date(createdOnString);
+      // const travelStartTimeDate = new Date(travelStartTimeString);
+
       // Insert the destination details into the destination table
       const destinationData = await pool.query(
         `INSERT INTO destination (d_name, source_name)

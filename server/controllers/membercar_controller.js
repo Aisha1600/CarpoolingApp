@@ -3,7 +3,8 @@ const pool = require("../db");
 
 module.exports={
 
-    //working and integrated 
+    //working 
+    //the token needs to be sent here and used to get the member_id
 NewMemberCar: async(req, res) => {
     try {
       const { member_id } = req.params;//.member_id;

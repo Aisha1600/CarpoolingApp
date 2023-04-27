@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt');
 const token = "carpool";
 const jwtSecret = 'itsworking';
 
+
 //need to add jwt tokens 
 module.exports = {
   //working and integrated
@@ -99,7 +100,10 @@ module.exports = {
       await pool.query(insertQuery, [Memberid, token]);
 
       // Return success message with token
-      return res.status(200).json({ message: 'Login successful', token: token });
+      return res.status(200).json({ 
+        message: 'Login successful', 
+        token: token 
+      });
     } catch (err) {
       console.error(err);
       res.status(500).send(err.message);
@@ -214,7 +218,7 @@ module.exports = {
       const { password } = req.body;
   
       // Retrieve the token from the request header
-      const token = req.headers.authorization.split(' ')[1];
+      const token = req.headers.authorization;
   
       // Verify the JWT token and extract the member_id
       const decoded = jwt.verify(token, jwtSecret);
