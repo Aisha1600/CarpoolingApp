@@ -7,7 +7,20 @@ module.exports={
     try {
       const { mcar_id } = req.params;
       const {destination_name, source_name, created_on, travel_start_time, seats_offered, contribution_per_head} = req.body;
+
+      //2023-04-26T10:30:00.000Z
+     //2023-04-27T09:00:00.000Z
+      console.log(req.body.created_on);
+      console.log(req.body.travel_start_time);
+
+      //Extract datetime strings from JSON object
+      // const createdOnString = req.body.created_on;
+      // const travelStartTimeString = req.body.travel_start_time;
   
+      //Convert datetime strings into JavaScript Date objects
+      // const createdOnDate = new Date(createdOnString);
+      // const travelStartTimeDate = new Date(travelStartTimeString);
+
       // Insert the destination details into the destination table
       const destinationData = await pool.query(
         `INSERT INTO destination (d_name, source_name)
