@@ -7,8 +7,7 @@ const membercar_controller = require("../controllers/membercar_controller");
 //router.post('/member/:member_id/addcar', membercar_controller.MemberCar);
 router.post('/InsertCar', membercar_controller.InsertCarDetails);
 router.post('/member/:member_id/car/:car_id', membercar_controller.updateCarMember);
-router.post('/member/:member_id/car/updatem', membercar_controller.UpdateCarM);
-router.get('/member/:member_id/car', membercar_controller.GetaCarMember);
+router.get('/getAllCarsOfMember', membercar_controller.getAllCarsOfMember);
 router.get('/member/:member_id/car/allcars', membercar_controller.getAllCarsOfMember);
 router.delete('/DeleteDetails', membercar_controller.DeleteDetails);
 

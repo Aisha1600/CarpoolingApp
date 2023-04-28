@@ -9,7 +9,7 @@ TODO LIST:
 - CHECK EVERYTHING BEFORE SUBMISSION DATE
 
 
-member controller has:
+member controller has: (all jwt auth)
 sign up (I) jwt auth
 login (I) JWT AUTH
 update/edit user details JWT AUTH
@@ -19,16 +19,13 @@ get one (do this today)
 /all member details
 logout JWT AUTH 
 
-car:
-delete car details
 
 //will be integrated where we have a sliding pop up on the offer carpool screen
 //need to make the frontend for these apis
-member_car:
-get a car
+member_car: ALL JWT DONE
 update car details
-add car details (I) (do this today)
-display all cars for one member (this can be used to get one car too) this
+add car details (I) 
+display all cars for one member 
 
 
 //will be integrated on the offer carpool screen 
@@ -43,12 +40,10 @@ update
 delete
 
 
-ride:
+ride: ALL JWT AUTH DONE
 offer ride takes all details including destination JWT AUTH
 edit offer
 delete an offer
-
-//need to do these 
 get a list of rides available JWT AUTH
 get list of avaialble and previous rides by carpool (not done)
 

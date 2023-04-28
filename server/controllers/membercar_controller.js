@@ -123,25 +123,32 @@ module.exports={
     }
   },  
 //working!
-   getAllCarsOfMember: async (req, res) => {
-    try {
-      const { member_id } = req.params;
-  
-      const data = await pool.query(`
-        SELECT m.member_id, m.f_name, m.l_name, c.car_id, c.name, c.model, c.make_year, mc.mcar_id, mc.car_regno, mc.car_color
-        FROM member m
-        LEFT JOIN member_car mc ON m.member_id = mc.member_id
-        LEFT JOIN car c ON mc.car_id = c.car_id
-        WHERE m.member_id = $1
-        GROUP BY m.member_id, m.f_name, m.l_name, c.car_id, c.name, c.model, c.make_year, mc.mcar_id, mc.car_regno, mc.car_color;
-      `, [member_id]);
-  
-      res.status(200).json(data.rows);
-    } catch (err) {
-      console.error(err.message);
-      res.sendStatus(500);
-    }
-  },
+getAllCarsOfMember: async (req, res) => {
+  try {
+    // Retrieve the token from the request header
+    const token = req.headers.authorization.split(' ')[1];
+
+    // Verify the JWT token and extract the member_id
+    const decoded = jwt.verify(token, jwtSecret);
+    const member_id = decoded.userId;
+
+    // Retrieve the member's cars from the database
+    const data = await pool.query(`
+      SELECT m.member_id, m.f_name, m.l_name, c.car_id, c.name, c.model, c.make_year, mc.mcar_id, mc.car_regno, mc.car_color
+      FROM member m
+      LEFT JOIN member_car mc ON m.member_id = mc.member_id
+      LEFT JOIN car c ON mc.car_id = c.car_id
+      WHERE m.member_id = $1
+      GROUP BY m.member_id, m.f_name, m.l_name, c.car_id, c.name, c.model, c.make_year, mc.mcar_id, mc.car_regno, mc.car_color;
+    `, [member_id]);
+
+    res.status(200).json(data.rows);
+  } catch (err) {
+    console.error(err.message);
+    res.sendStatus(500);
+  }
+}
+
 
  
 }
