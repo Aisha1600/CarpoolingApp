@@ -202,6 +202,8 @@ CREATE TABLE PASSENGERS (
 
  -- new changes for ride token
  ALTER TABLE ride ADD COLUMN ride_token TEXT;
+ALTER TABLE member_car ADD COLUMN car_token TEXT;
+
 
 
 

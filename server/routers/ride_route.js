@@ -11,5 +11,9 @@ router.delete('/deleteR', ride_controller.DeleteARidee)
 // router.get('/getAride/:id', ride_controller.GetARide)
 router.get('/Getallrides', ride_controller.GetAllUserRides)
 //not checked yet
+//GetAllRides
+router.get('/GetAll', ride_controller.GetAllRides)
+
+
 
 module.exports = router;

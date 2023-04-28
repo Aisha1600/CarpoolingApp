@@ -193,7 +193,32 @@ GetAllUserRides: async (req, res) => {
     console.error(err);
     res.status(500).send('Error retrieving rides');
   }
+},
+
+GetAllRides: async (req, res) => {
+  try {
+    // Retrieve the token from the request header
+    const token = req.headers.authorization.split(' ')[1];
+
+    // Verify the JWT token and extract the user_id
+    const decoded = jwt.verify(token, jwtSecret);
+    const user_id = decoded.user_id;
+    console.log(`The extracted user_id from the JWT token is: ${user_id}`);
+    console.log('Decoded JWT token:', decoded);
+
+    // Retrieve all rides from the database
+    const rides = await pool.query(
+      `SELECT * FROM ride WHERE member_id != $1`,
+      [user_id]
+    );
+    console.log('All rides for user:', rides.rows);
+    res.status(200).send(rides.rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Error retrieving rides');
+  }
 }
+
 
       
 }

@@ -91,7 +91,7 @@ module.exports = {
 
       // Generate a JWT
       const payload = { userId: result.rows[0].member_id };
-      const token = jwt.sign(payload, jwtSecret, { expiresIn: '10h' });
+      const token = jwt.sign(payload, jwtSecret);
 
       // Insert the generated token into the jwt_tokens table for the logged-in user
       const Memberid = result.rows[0].member_id;
