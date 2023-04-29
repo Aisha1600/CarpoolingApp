@@ -26,6 +26,11 @@ module.exports={
         `SELECT mcar_id FROM member_car WHERE member_id = $1`,
         [member_id]
       );
+      
+      if (!mcarData.rows[0]) {
+        return res.status(404).json({ error: 'Member car not found' });
+      }
+      
       const mcar_id = mcarData.rows[0].mcar_id;
   
       //Convert datetime strings into JavaScript Date objects
@@ -52,6 +57,7 @@ module.exports={
   
       // Create a JWT token containing the ride_id
       const rideToken = jwt.sign({ ride_id }, jwtSecret);
+
   
       // Add the rideToken to the ride table
       await pool.query(
@@ -59,12 +65,17 @@ module.exports={
         [rideToken, ride_id]
       );
   
-      res.status(200).send('Ride created');
+      res.status(201).json({
+        message: 'Ride created successfully',
+        ride: rideData.rows[0],
+        token: token
+      });
+
     } catch (err) {
       console.error(err);
       res.status(500).send('Error creating ride');
     }
-  },  
+  },
 
 EditARidee: async (req, res) => {
   try {
