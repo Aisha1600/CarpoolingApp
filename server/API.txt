@@ -19,6 +19,8 @@ get one (do this today)
 /all member details
 logout JWT AUTH 
 
+//lisencence info update
+
 
 //will be integrated where we have a sliding pop up on the offer carpool screen
 //need to make the frontend for these apis
