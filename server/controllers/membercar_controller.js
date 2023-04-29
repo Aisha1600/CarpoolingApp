@@ -1,4 +1,6 @@
 //ALL OK!
+//add res.201 response
+//add if car exists for member
 const pool = require("../db");
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
@@ -47,6 +49,34 @@ module.exports={
       res.status(500).send(err.message);
     }
   },
+
+   getMemberCarId: async (req, res) => {
+    try {
+      // Retrieve the token from the request header
+      const token = req.headers.authorization.split(' ')[1];
+  
+      // Verify the JWT token and extract the member_id
+      const decoded = jwt.verify(token, jwtSecret);
+      const member_id = decoded.userId;
+  
+      // Get the member's car ID from the member_car table
+      const result = await pool.query(
+        'SELECT car_id FROM member_car WHERE member_id = $1',
+        [member_id]
+      );
+  
+      // Check if the member has a car associated with them or not
+      if (result.rowCount === 0) {
+        res.status(404).json({ message: 'No car associated with this member' });
+      } else {
+        const car_id = result.rows[0].car_id;
+        res.status(200).json({ car_id });
+      }
+    } catch (err) {
+      console.error(err);
+      res.status(500).send('Error retrieving member car ID');
+    }
+  },  
 
   DeleteDetails: async (req, res) => {
     try {
