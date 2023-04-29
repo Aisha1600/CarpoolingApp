@@ -1,5 +1,8 @@
 const pool = require("../db");
 
+//checks if there is any car details for the given member_id api 
+
+
 module.exports={
   //working
   addCar: async (req, res) => {

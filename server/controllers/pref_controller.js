@@ -1,42 +1,36 @@
 const pool = require("../db");
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
+const token = "carpool";
+const jwtSecret = 'itsworking';
+
 
 module.exports={
 
-    //changes made
-    //working!
-    //token should be sent here to get decoded and take out the member_id from it
-    //the controller for this will have to be changed as well 
-  AddPrefer: async (req, res) => {
-    try {
-        const { member_id } = req.params;
+    //user adds a preference 
+    AddPref: async (req, res) => {
+      try {
         const { is_smoking_allowed, is_all_female, notes } = req.body;
-        await pool.query('INSERT INTO preference (member_id, is_smoking_allowed, is_all_female, notes) VALUES ($1, $2, $3, $4) RETURNING *',
-            [member_id, is_smoking_allowed, is_all_female, notes]);
-        res.status(201).send('Preference added successfully!');
-    } catch (error) {
-        console.error(error.message);
-        res.status(500).send('Server Error');
-    }
-},
-
     
-    //user adds a preference (Aamna)
-    //not working properly
-    AddPref:  async (req, res) => {
-        
-        try {
-        //  const { member_id } = req.params;
-
-           const {is_smoking_allowed, is_all_female, notes} = req.body;
-          await pool.query('INSERT INTO preference (is_smoking_allowed, is_all_female, notes) VALUES ($1, $2, $3) RETURNING *',
-          [is_smoking_allowed, is_all_female, notes]);
-          res.status(200).send('Preference added!');
-          res.json(result.rows[0]);
-        } catch (err) {
-          console.error(err);
-          res.status(500).send('Error adding preference.');
-        }
-      },
+        // Retrieve the token from the request header
+        const token = req.headers.authorization.split(' ')[1];
+    
+        // Verify the JWT token and extract the member_id
+        const decoded = jwt.verify(token, jwtSecret);
+        const member_id = decoded.userId;
+    
+        await pool.query(
+          'INSERT INTO preference (member_id, is_smoking_allowed, is_all_female, notes) VALUES ($1, $2, $3, $4)',
+          [member_id, is_smoking_allowed, is_all_female, notes]
+        );
+    
+        res.status(200).send('Preference added!');
+      } catch (err) {
+        console.error(err);
+        res.status(500).send('Error adding preference.');
+      }
+    },
+    
       //no frontend functionality for now 
       //user deletes a preference
       //working!!

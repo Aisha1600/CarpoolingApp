@@ -8,6 +8,8 @@ const jwtSecret = 'itsworking';
 //need to add jwt tokens 
 module.exports = {
   //working and integrated
+  //generate token 
+
   SignUp: async (req, res) => {
     try {
       const { f_name, l_name, email, contact_no, gender, password, cnic } = req.body;
@@ -23,11 +25,16 @@ module.exports = {
         [f_name, l_name, email, contact_no, gender, password, cnic]
       );
       const newMember = result.rows[0];
-      res.sendStatus(200);
+      
+      // Generate a JWT token for member_id
+      const payload = { userId: newMember.member_id };
+      const token = jwt.sign(payload, jwtSecret);
+
       // Response format
       res.status(201).json({
         message: 'Member created successfully',
         member: newMember,
+        token: token
       });
     } catch (error) {
       // Error handling
@@ -36,43 +43,8 @@ module.exports = {
     }
   },
 
-  //working and integrated integrate the one below
-  login: async (req, res) => {
-    try {
-      // Extract email and password from request body
-      const { email, password } = req.body;
-      // Validate input
-      if (!email || !password) {
-        return res.status(400).json({ error: 'Email and password are required' });
-      }
-
-      // Query the database to find the user with the given email
-      const result = await pool.query('SELECT * FROM member WHERE email = $1 AND password = $2', [email, password]);
-      // Check if user exists
-      if (result.rows.length === 0) {
-        return res.status(401).json({ error: 'Something wrong' });
-      }
-      console.log(password);
-      // Compare password with the one stored in the database
-      if (result.rows[0].password.trim() !== password) {
-        console.log(result.rows);
-        console.log(password);
-        console.log(result.rows[0].password);
-        //return result.rows[0].password;
-        return res.status(401).json({ error: 'Invalid email or password' });
-
-      }
-      // User is authenticated, return success message
-      return res.status(200).json({ message: 'Login successful' });
-      return console.log('login sucessful');
-    } catch (err) {
-      console.error(err);
-      res.status(500).send(err.message);
-    }
-  },
-
   //need to integrate this one
-  loogin: async (req, res) => {
+  login: async (req, res) => {
     try {
       // Extract email and password from request body
       const { email, password } = req.body;
@@ -130,6 +102,31 @@ module.exports = {
       res.status(500).send(err.message);
     }
   },
+
+  InsertLicense: async (req, res) => {
+    try {
+      // Retrieve the token from the request header
+      const token = req.headers.authorization.split(' ')[1];
+  
+      // Verify the JWT token and extract the member_id
+      const decoded = jwt.verify(token, jwtSecret);
+      const member_id = decoded.userId;
+  
+      // Extract the updated details from the request body
+      const { license_no, license_valid_from  } = req.body;
+  
+      // Update the member details in the database
+      await pool.query(
+        `UPDATE member SET license_no = $1, license_valid_from = $2 WHERE member_id = $3`,
+        [license_no, license_valid_from, member_id]
+      );
+  
+      res.status(200).send('Member details updated successfully!');
+    } catch (err) {
+      console.error(err);
+      res.status(500).send(err.message);
+    }
+  },  
 
   //with jwt auth, integrate this
   Update: async (req, res) => {
