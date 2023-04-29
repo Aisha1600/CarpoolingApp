@@ -7,6 +7,8 @@ const jwtSecret = 'itsworking';
 
 module.exports={
 
+
+  //use this for inserting car details and send the token in the api header
   InsertCarDetails: async (req, res) => {
     try {
       const { name, model, make_year, car_regno, car_color } = req.body;
