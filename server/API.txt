@@ -8,6 +8,8 @@ TODO LIST:
 - INTEGRATION OF REMAINING APIS
 - CHECK EVERYTHING BEFORE SUBMISSION DATE
 
+Aqsa:
+
 
 member controller has: (all jwt auth)
 sign up (I) jwt auth
@@ -56,11 +58,13 @@ fliter request based on locoation
 send ride request
 see if ride request is accepted or not
 
+status apis done with jwt
+create request done with jwt
+
 (Aamna)
 pasaanger apis
 rating api
-request status api
-request api
+requestsent api
 
 
 
