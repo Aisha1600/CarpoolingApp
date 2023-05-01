@@ -13,6 +13,7 @@ router.get('/Getallrides', ride_controller.GetAllUserRides)
 //not checked yet
 //GetAllRides
 router.get('/GetAll', ride_controller.GetAllRides)
+router.get('/GetAllCurrentRides', ride_controller.GetAllCurrentRides)
 
 
 

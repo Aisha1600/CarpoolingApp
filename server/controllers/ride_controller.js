@@ -185,6 +185,30 @@ GetAllRides: async (req, res) => {
     console.error(err);
     res.status(500).send('Error retrieving rides');
   }
+},
+
+GetAllCurrentRides: async (req, res) =>  {
+  try {
+    const currentDate = new Date(); // get current date and time
+    const ridesData = await pool.query(
+      `SELECT r.ride_id, r.member_id, d.d_name, r.travel_start_time, r.seats_offered, r.contribution_per_head
+       FROM ride r
+       JOIN member_car mc ON r.mcar_id = mc.mcar_id
+       JOIN car c ON mc.car_id = c.car_id
+       JOIN destination d ON r.destination_id = d.destination_id
+       WHERE r.travel_start_time > $1
+       ORDER BY r.travel_start_time ASC`,
+      [currentDate]
+    );
+    const rides = ridesData.rows;
+    res.status(200).json({
+      message: 'Rides retrieved successfully',
+      rides: rides
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Error retrieving rides');
+  }
 }
 
 
