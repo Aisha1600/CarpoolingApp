@@ -13,7 +13,7 @@ module.exports={
       const { destination_name, source_name, created_on, travel_start_time, seats_offered, contribution_per_head } = req.body;
   
       // Retrieve the token from the request header
-      const token = req.headers.authorization.split(' ')[1];
+      const token = req.headers.authorization;
   
       // Verify the JWT token and extract the member_id
       const decoded = jwt.verify(token, jwtSecret);
@@ -29,13 +29,10 @@ module.exports={
       
       if (!mcarData.rows[0]) {
         return res.status(404).json({ error: 'Member car not found' });
+        console.log('Member car not found');
       }
       
       const mcar_id = mcarData.rows[0].mcar_id;
-  
-      //Convert datetime strings into JavaScript Date objects
-      // const createdOnDate = new Date(createdOnString);
-      // const travelStartTimeDate = new Date(travelStartTimeString);
 
       // Insert the destination details into the destination table
       const destinationData = await pool.query(
