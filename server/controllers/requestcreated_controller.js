@@ -120,7 +120,7 @@ EditRequest: async (req, res) => {
  GetAllRequests: async (req, res) => {
   try {
     // Retrieve the token from the request header
-    const token = req.headers.authorization.split(' ')[1];
+    const token = req.headers.authorization;
 
     // Verify the JWT token and extract any necessary information
     const decoded = jwt.verify(token, jwtSecret);
