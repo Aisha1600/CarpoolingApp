@@ -163,11 +163,11 @@ GetAllUserRides: async (req, res) => {
 GetAllRides: async (req, res) => {
   try {
     // Retrieve the token from the request header
-    const token = req.headers.authorization.split(' ')[1];
+    const token = req.headers.authorization;
 
     // Verify the JWT token and extract the user_id
     const decoded = jwt.verify(token, jwtSecret);
-    const user_id = decoded.user_id;
+    const user_id = decoded.userId;
     console.log(`The extracted user_id from the JWT token is: ${user_id}`);
     console.log('Decoded JWT token:', decoded);
 
