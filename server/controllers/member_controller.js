@@ -20,7 +20,7 @@ module.exports = {
       }
   
       // Check length of cnic and contact_no
-      if (cnic.length !== 13 || contact_no.length !== 13) {
+      if (cnic.length !== 15 || contact_no.length !== 14) {
         return res.status(400).json({ error: 'CNIC and contact number should be 13 characters long' });
       }
   
