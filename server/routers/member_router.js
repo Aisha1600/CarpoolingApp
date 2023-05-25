@@ -11,6 +11,7 @@ router.delete('/logout', MemberController.logout);
 router.put('/Update/:member_id',MemberController.Update);
 router.put('/UpdatePass',MemberController.UpdatePass);
 router.put('/InsertLicense',MemberController.InsertLicense);
+router.get('/displayProfile',MemberController.GetOneMember);
 
 
 

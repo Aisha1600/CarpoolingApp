@@ -69,10 +69,10 @@ module.exports={
   
       // Check if the member has a car associated with them or not
       if (result.rowCount === 0) {
-        res.status(404).json({ message: 'No car associated with this member' });
+        res.status(404);
       } else {
         const car_id = result.rows[0].car_id;
-        res.status(200).json({ car_id });
+        res.status(200);
       }
     } catch (err) {
       console.error(err);

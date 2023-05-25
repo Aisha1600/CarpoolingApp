@@ -13,12 +13,17 @@ module.exports = {
   SignUp: async (req, res) => {
     try {
       const { f_name, l_name, email, contact_no, gender, password, cnic } = req.body;
-
+  
       // Input validation
       if (!f_name || !l_name || !email || !contact_no || !gender || !password || !cnic) {
         return res.status(400).json({ error: 'Invalid input' });
       }
-
+  
+      // Check length of cnic and contact_no
+      if (cnic.length !== 13 || contact_no.length !== 13) {
+        return res.status(400).json({ error: 'CNIC and contact number should be 13 characters long' });
+      }
+  
       console.log('Adding member');
       const result = await pool.query(
         'INSERT INTO member(f_name, l_name, email, contact_no, gender, password, cnic) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *',
@@ -29,7 +34,7 @@ module.exports = {
       // Generate a JWT token for member_id
       const payload = { userId: newMember.member_id };
       const token = jwt.sign(payload, jwtSecret);
-
+  
       // Response format
       res.status(201).json({
         message: 'Member created successfully',
@@ -42,6 +47,39 @@ module.exports = {
       res.status(500).json({ error: 'Something went wrong' });
     }
   },
+
+  // SignUp: async (req, res) => {
+  //   try {
+  //     const { f_name, l_name, email, contact_no, gender, password, cnic } = req.body;
+
+  //     // Input validation
+  //     if (!f_name || !l_name || !email || !contact_no || !gender || !password || !cnic) {
+  //       return res.status(400).json({ error: 'Invalid input' });
+  //     }
+
+  //     console.log('Adding member');
+  //     const result = await pool.query(
+  //       'INSERT INTO member(f_name, l_name, email, contact_no, gender, password, cnic) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *',
+  //       [f_name, l_name, email, contact_no, gender, password, cnic]
+  //     );
+  //     const newMember = result.rows[0];
+      
+  //     // Generate a JWT token for member_id
+  //     const payload = { userId: newMember.member_id };
+  //     const token = jwt.sign(payload, jwtSecret);
+
+  //     // Response format
+  //     res.status(201).json({
+  //       message: 'Member created successfully',
+  //       member: newMember,
+  //       token: token
+  //     });
+  //   } catch (error) {
+  //     // Error handling
+  //     console.error(error);
+  //     res.status(500).json({ error: 'Something went wrong' });
+  //   }
+  // },
 
   //need to integrate this one
   login: async (req, res) => {
@@ -248,7 +286,29 @@ module.exports = {
       console.error(err.message);
     }
   },
-
+//to use right now
+  GetOneMember: async (req, res) => {
+    try {
+      // Retrieve the token from the request header
+      const token = req.headers.authorization;
+  
+      // Verify the JWT token and extract the member_id
+      const decoded = jwt.verify(token, jwtSecret);
+      const member_id = decoded.userId;
+  
+      // Get the member information from the database
+      const member = await pool.query(
+        `SELECT * FROM "member"
+        WHERE member_id = $1;`,
+        [member_id]
+      );
+  
+      res.status(200).json(member.rows);
+    } catch (err) {
+      console.error(err.message);
+      res.sendStatus(500);
+    }
+  },
   //working
   getMember: async (req, res) => {
     try {
